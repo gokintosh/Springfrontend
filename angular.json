@@ -120,5 +120,8 @@
       }
     }
   },
-  "defaultProject": "angular8-api"
+  "defaultProject": "angular8-api",
+  "cli": {
+    "analytics": "a2bc8887-036c-49df-bd15-f7c49ed52c67"
+  }
 }
