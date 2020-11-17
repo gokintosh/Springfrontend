@@ -16,7 +16,19 @@ export class EmployeeListComponent implements OnInit {
   constructor(private employeeService:EmployeeService,private router:Router) { }
 
   ngOnInit(): void {
-    this.employeeService.getEmployees();
+    this.employees=this.employeeService.getEmployees();
+  }
+
+  deleteEmployee(id:number){
+    this.employeeService.deleteEmployee(id).subscribe(
+      data=>{
+        console.log(data);
+        this.employees=this.employeeService.getEmployees();
+    },
+    error=>console.error(error));
+    
+
+    
   }
 
 }
