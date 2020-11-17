@@ -1,4 +1,9 @@
+import { Route } from '@angular/compiler/src/core';
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ApiResponse } from 'src/app/model/api.response';
+import { Employee } from 'src/app/model/employee.model';
+import { EmployeeService } from 'src/app/service/employee.service';
 
 @Component({
   selector: 'app-update-employee',
@@ -7,9 +12,32 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UpdateEmployeeComponent implements OnInit {
 
-  constructor() { }
+  id:number;
+  employee:Employee;
+  apiResponse:ApiResponse;
+
+  constructor(private route:ActivatedRoute,private router:Router,private employeeService:EmployeeService) { }
 
   ngOnInit(): void {
+
+    this.employee=new Employee();
+
+    this.id=this.route.snapshot.params['id'];
+
+    this.employeeService.getEmployeeById(this.id).subscribe(data=>{
+      console.log(data)
+      this.employee=data;
+    },error=>console.log(error));
+
+
+
+  }
+
+  onSubmit(){
+    this.employeeService.updateEmployee(this.id,this.employee).subscribe(data=>console.log(data),error=>console.log(error));
+    this.employee=new Employee();
+    this.router.navigate(['/employees']);
+    
   }
 
 }
